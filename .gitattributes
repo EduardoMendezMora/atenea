@@ -1,0 +1,21 @@
+# Asegurar que .nvmrc use LF (Unix line endings)
+.nvmrc text eol=lf
+
+# Scripts de shell también deben usar LF
+*.sh text eol=lf
+
+# Archivos de configuración importantes
+*.toml text eol=lf
+*.json text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+
+# Archivos de documentación
+*.md text eol=lf
+
+# Archivos de configuración de build
+vite.config.js text eol=lf
+package.json text eol=lf
+package-lock.json text eol=lf
