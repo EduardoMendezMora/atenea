@@ -1,13 +1,220 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://base44.com/logo_v2.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Base44 APP</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atenea - Sistema de Gestión</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Supabase CDN -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+</head>
+<body class="bg-gray-50">
+    <!-- Root container -->
+    <div id="root">
+        <!-- Loading spinner -->
+        <div id="loading" class="flex items-center justify-center min-h-screen">
+            <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        </div>
+        
+        <!-- Main app container (hidden initially) -->
+        <div id="app" class="hidden">
+            <!-- Sidebar -->
+            <div id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white shadow-lg transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0">
+                <div class="flex items-center justify-between h-16 px-4 border-b">
+                    <h1 class="text-xl font-bold text-gray-800">Atenea</h1>
+                    <button id="sidebar-close" class="lg:hidden">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+                
+                <!-- Navigation Menu -->
+                <nav class="mt-4 px-4">
+                    <div class="space-y-2">
+                        <!-- Dashboard -->
+                        <a href="#/" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Dashboard">
+                            <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                            Dashboard
+                        </a>
+                        
+                        <!-- Clientes -->
+                        <a href="#/Clientes" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Clientes">
+                            <i data-lucide="users" class="w-5 h-5 mr-3"></i>
+                            Clientes
+                        </a>
+                        
+                        <!-- Contratos -->
+                        <a href="#/Contratos" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Contratos">
+                            <i data-lucide="file-text" class="w-5 h-5 mr-3"></i>
+                            Contratos
+                        </a>
+                        
+                        <!-- Facturación -->
+                        <a href="#/Facturacion" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Facturacion">
+                            <i data-lucide="receipt" class="w-5 h-5 mr-3"></i>
+                            Facturación
+                        </a>
+                        
+                        <!-- Pagos -->
+                        <a href="#/Pagos" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Pagos">
+                            <i data-lucide="credit-card" class="w-5 h-5 mr-3"></i>
+                            Pagos
+                        </a>
+                        
+                        <!-- Notas de Crédito -->
+                        <a href="#/NotasCredito" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="NotasCredito">
+                            <i data-lucide="file-minus" class="w-5 h-5 mr-3"></i>
+                            Notas de Crédito
+                        </a>
+                        
+                        <!-- Vehículos -->
+                        <a href="#/Vehiculos" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Vehiculos">
+                            <i data-lucide="truck" class="w-5 h-5 mr-3"></i>
+                            Vehículos
+                        </a>
+                        
+                        <!-- Tareas -->
+                        <a href="#/Tareas" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Tareas">
+                            <i data-lucide="wrench" class="w-5 h-5 mr-3"></i>
+                            Tareas
+                        </a>
+                        
+                        <!-- Inbox -->
+                        <a href="#/Inbox" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Inbox">
+                            <i data-lucide="message-square" class="w-5 h-5 mr-3"></i>
+                            Inbox
+                        </a>
+                        
+                        <!-- Chat -->
+                        <a href="#/Chat" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Chat">
+                            <i data-lucide="message-circle" class="w-5 h-5 mr-3"></i>
+                            Chat
+                        </a>
+                        
+                        <!-- Repuestos -->
+                        <a href="#/Repuestos" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Repuestos">
+                            <i data-lucide="package-search" class="w-5 h-5 mr-3"></i>
+                            Repuestos
+                        </a>
+                        
+                        <!-- Trámites -->
+                        <a href="#/Tramites" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Tramites">
+                            <i data-lucide="file-check-2" class="w-5 h-5 mr-3"></i>
+                            Trámites
+                        </a>
+                        
+                        <!-- Usuarios -->
+                        <a href="#/Usuarios" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Usuarios">
+                            <i data-lucide="user" class="w-5 h-5 mr-3"></i>
+                            Usuarios
+                        </a>
+                        
+                        <!-- Configuración -->
+                        <div class="mt-6">
+                            <h3 class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Configuración</h3>
+                            <div class="mt-2 space-y-1">
+                                <a href="#/ConfiguracionVehiculos" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="ConfiguracionVehiculos">
+                                    <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
+                                    Config. Vehículos
+                                </a>
+                                <a href="#/ConfiguracionTramites" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="ConfiguracionTramites">
+                                    <i data-lucide="settings" class="w-5 h-5 mr-3"></i>
+                                    Config. Trámites
+                                </a>
+                                <a href="#/Automatizacion" class="nav-item flex items-center px-3 py-2 text-sm font-medium rounded-md hover:bg-gray-100" data-page="Automatizacion">
+                                    <i data-lucide="zap" class="w-5 h-5 mr-3"></i>
+                                    Automatización
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                
+                <!-- User Menu -->
+                <div class="absolute bottom-0 left-0 right-0 p-4 border-t">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                <span class="text-white text-sm font-medium" id="user-initials">U</span>
+                            </div>
+                        </div>
+                        <div class="ml-3 flex-1">
+                            <p class="text-sm font-medium text-gray-700" id="user-name">Usuario</p>
+                            <p class="text-xs text-gray-500" id="user-role">Admin</p>
+                        </div>
+                        <button id="logout-btn" class="ml-2 p-1 rounded-md hover:bg-gray-100">
+                            <i data-lucide="log-out" class="w-4 h-4 text-gray-500"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="lg:pl-64">
+                <!-- Top Bar -->
+                <div class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+                    <button id="sidebar-toggle" class="lg:hidden">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    
+                    <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
+                        <div class="flex flex-1"></div>
+                        <div class="flex items-center gap-x-4 lg:gap-x-6">
+                            <!-- Notifications -->
+                            <button class="p-2 text-gray-400 hover:text-gray-500">
+                                <i data-lucide="bell" class="w-6 h-6"></i>
+                            </button>
+                            
+                            <!-- Search -->
+                            <div class="hidden lg:block lg:max-w-md lg:flex-auto">
+                                <div class="relative">
+                                    <input type="search" placeholder="Buscar..." class="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                                        <i data-lucide="search" class="w-5 h-5 text-gray-400"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Page Content -->
+                <main class="py-6">
+                    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <!-- Page Header -->
+                        <div class="mb-6">
+                            <h1 id="page-title" class="text-2xl font-bold text-gray-900">Dashboard</h1>
+                            <p id="page-description" class="mt-1 text-sm text-gray-500">Resumen general del sistema</p>
+                        </div>
+                        
+                        <!-- Dynamic Content Container -->
+                        <div id="page-content">
+                            <!-- Content will be loaded here dynamically -->
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+    
+    <!-- Scripts -->
+    <script src="js/supabase.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/main.js"></script>
+</body>
 </html>
