@@ -1,13 +1,7 @@
 [build]
   command = "echo 'Static site - no build required'"
   publish = "."
-
-[build.environment]
-  NODE_VERSION = "20.17.0"
-  VITE_SUPABASE_URL = "https://sovraqexnkjggbklmbrp.supabase.co"
-  VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNvdnJhcWV4bmtqZ2dia2xtYnJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY1ODkzNTQsImV4cCI6MjA3MjE2NTM1NH0.dwGBbr5HFgtyQS2Jsvsihp06AjIFGILUIPM8fdX5oXM"
-  SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNvdnJhcWV4bmtqZ2dia2xtYnJwIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NjU4OTM1NCwiZXhwIjoyMDcyMTY1MzU0fQ.OS6A06i4usR4esV38BoLagT_27FI6RHodWpONITHDq8"
-  NODE_ENV = "production"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ."
 
 [[redirects]]
   from = "/*"
